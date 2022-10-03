@@ -33,8 +33,15 @@ order by 1,2
 select Location, population, MAX(total_cases) as HighestInfectionCount, MAX((total_cases/population))*100 as PercentofPopulationInfected
 from [Portfolio Project1]..CovidDeaths
 --where location like 'Poland'
-where continent is not null
+--where continent is not null
 group by Location, population
+order by PercentofPopulationInfected desc
+
+select Location, population,date,  MAX(total_cases) as HighestInfectionCount, MAX((total_cases/population))*100 as PercentofPopulationInfected
+from [Portfolio Project1]..CovidDeaths
+--where location like 'Poland'
+--where continent is not null
+group by Location, population,date
 order by PercentofPopulationInfected desc
 
 --countries with highest death count per population
@@ -42,6 +49,14 @@ select Location, max(cast(total_deaths as int)) as TotalDeathCount
 from [Portfolio Project1]..CovidDeaths
 --where location like 'Poland'
 where continent is not null
+group by Location
+order by TotalDeathCount desc
+
+--countries with highest death count per population
+select Location, max(cast(total_deaths as int)) as TotalDeathCount
+from [Portfolio Project1]..CovidDeaths
+--where location like 'Poland'
+where continent is null and location not in ('World', 'European Union', 'International')
 group by Location
 order by TotalDeathCount desc
 
